@@ -5,7 +5,7 @@ declare module 'aurelia-ej-bridge' {
   import { customAttribute, bindable }  from 'aurelia-templating';
   
   /**
-  * Plugin configuration builder
+  * Aurelia-EJ-Bridge configuration builder
   */
   export class EJConfigBuilder {
     useGlobalResources: boolean;
@@ -13,7 +13,7 @@ declare module 'aurelia-ej-bridge' {
     web(): EJConfigBuilder;
     
     /**
-      * Use my control
+      * Resources for the EJ Widgets
       */
     ejDatePicker(): EJConfigBuilder;
     

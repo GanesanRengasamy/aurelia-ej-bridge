@@ -17,7 +17,7 @@ var EJConfigBuilder = (function () {
   };
 
   EJConfigBuilder.prototype.ejDatePicker = function ejDatePicker() {
-    this.globalResources.push('datepicker/datepicker');
+    this.globalResources.push('web/datepicker/ej.datepicker');
     return this;
   };
 

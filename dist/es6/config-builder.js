@@ -1,5 +1,5 @@
 /**
-* Plugin configuration builder
+* Aurelia-EJ-Bridge configuration builder
 */
 export class EJConfigBuilder {
 
@@ -10,10 +10,10 @@ export class EJConfigBuilder {
     return this.ejDatePicker();
   }
   /**
-  * Use my control
+  * Resources for the EJ Widgets
   */
   ejDatePicker(): EJConfigBuilder {
-    this.globalResources.push('datepicker/datepicker');
+    this.globalResources.push('web/datepicker/ej.datepicker');
     return this;
   }
   /**

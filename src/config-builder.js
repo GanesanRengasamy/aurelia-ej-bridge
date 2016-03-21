@@ -13,7 +13,7 @@ export class EJConfigBuilder {
   * Resources for the EJ Widgets
   */
   ejDatePicker(): EJConfigBuilder {
-    this.globalResources.push('datepicker/datepicker');
+    this.globalResources.push('web/datepicker/ej.datepicker');
     return this;
   }
   /**

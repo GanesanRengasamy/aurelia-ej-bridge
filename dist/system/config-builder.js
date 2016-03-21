@@ -21,7 +21,7 @@ System.register([], function (_export) {
         };
 
         EJConfigBuilder.prototype.ejDatePicker = function ejDatePicker() {
-          this.globalResources.push('datepicker/datepicker');
+          this.globalResources.push('web/datepicker/ej.datepicker');
           return this;
         };
 
