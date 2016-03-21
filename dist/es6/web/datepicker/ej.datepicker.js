@@ -1,31 +1,35 @@
 import {inject} from 'aurelia-dependency-injection';
 import {customAttribute, bindable} from 'aurelia-templating';
-import {constants} from '../common/constants';
+import {generateBindables, WidgetBase} from '../../common/ej.widget.core';
+import {constants} from '../../common/ej.widget.constants';
+import 'ej.datepicker.min';
 
 @customAttribute(`${constants.attributePrefix}datepicker`)
 @generateBindables('ejDatePicker')
 @inject(Element)
 export class DatePicker {
 
-  @bindable defaults = {};
+  @bindable ejDefaults = {};
 
-  constructor(element, widgetBase) {
-    this.element = element; 
+  constructor(element) {
+     this.element = element;
   }
 
   bind() {
-    
+     
   }
 
   attached() {
-    
+     
   }
+
+   
 
   propertyChanged(property, newValue, oldValue) {
      
   }
 
   detached() {
-    
+     
   }
 }

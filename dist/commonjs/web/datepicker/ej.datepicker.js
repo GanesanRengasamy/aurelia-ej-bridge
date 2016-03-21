@@ -12,41 +12,45 @@ var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
 var _aureliaTemplating = require('aurelia-templating');
 
-var _commonConstants = require('../common/constants');
+var _commonEjWidgetCore = require('../../common/ej.widget.core');
+
+var _commonEjWidgetConstants = require('../../common/ej.widget.constants');
+
+require('ej.datepicker.min');
 
 var DatePicker = (function () {
-  var _instanceInitializers = {};
+   var _instanceInitializers = {};
 
-  _createDecoratedClass(DatePicker, [{
-    key: 'defaults',
-    decorators: [_aureliaTemplating.bindable],
-    initializer: function initializer() {
-      return {};
-    },
-    enumerable: true
-  }], null, _instanceInitializers);
+   _createDecoratedClass(DatePicker, [{
+      key: 'ejDefaults',
+      decorators: [_aureliaTemplating.bindable],
+      initializer: function initializer() {
+         return {};
+      },
+      enumerable: true
+   }], null, _instanceInitializers);
 
-  function DatePicker(element, widgetBase) {
-    _classCallCheck(this, _DatePicker);
+   function DatePicker(element) {
+      _classCallCheck(this, _DatePicker);
 
-    _defineDecoratedPropertyDescriptor(this, 'defaults', _instanceInitializers);
+      _defineDecoratedPropertyDescriptor(this, 'ejDefaults', _instanceInitializers);
 
-    this.element = element;
-  }
+      this.element = element;
+   }
 
-  DatePicker.prototype.bind = function bind() {};
+   DatePicker.prototype.bind = function bind() {};
 
-  DatePicker.prototype.attached = function attached() {};
+   DatePicker.prototype.attached = function attached() {};
 
-  DatePicker.prototype.propertyChanged = function propertyChanged(property, newValue, oldValue) {};
+   DatePicker.prototype.propertyChanged = function propertyChanged(property, newValue, oldValue) {};
 
-  DatePicker.prototype.detached = function detached() {};
+   DatePicker.prototype.detached = function detached() {};
 
-  var _DatePicker = DatePicker;
-  DatePicker = _aureliaDependencyInjection.inject(Element)(DatePicker) || DatePicker;
-  DatePicker = generateBindables('ejDatePicker')(DatePicker) || DatePicker;
-  DatePicker = _aureliaTemplating.customAttribute(_commonConstants.constants.attributePrefix + 'datepicker')(DatePicker) || DatePicker;
-  return DatePicker;
+   var _DatePicker = DatePicker;
+   DatePicker = _aureliaDependencyInjection.inject(Element)(DatePicker) || DatePicker;
+   DatePicker = _commonEjWidgetCore.generateBindables('ejDatePicker')(DatePicker) || DatePicker;
+   DatePicker = _aureliaTemplating.customAttribute(_commonEjWidgetConstants.constants.attributePrefix + 'datepicker')(DatePicker) || DatePicker;
+   return DatePicker;
 })();
 
 exports.DatePicker = DatePicker;

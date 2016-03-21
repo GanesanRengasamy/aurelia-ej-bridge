@@ -3,6 +3,7 @@ declare module 'aurelia-ej-bridge' {
   import { Aurelia }  from 'aurelia-framework';
   import { inject }  from 'aurelia-dependency-injection';
   import { customAttribute, bindable }  from 'aurelia-templating';
+  import 'ej.datepicker.min';
   
   /**
   * Aurelia-EJ-Bridge configuration builder
@@ -26,25 +27,13 @@ declare module 'aurelia-ej-bridge' {
   export function configure(aurelia: Aurelia, configCallback?: ((builder: EJConfigBuilder) => void)): any;
   export let bindables: any;
   export const constants: any;
-  
-  /**
-  * Fire DOM event on an element
-  * @param element The Element which the DOM event will be fired on
-  * @param name The Event's name
-  * @param data Addition data to attach to an event
-  */
-  export function fireEvent(element: Element, name: string, data?: any): any;
-  
-  /**
-  * Fire DOM event on an element with the ej-on prefix
-  * @param element The Element which the DOM event will be fired on
-  * @param name The Event's name, without ej-on prefix
-  * @param data Addition data to attach to an event
-  */
-  export function fireEJEvent(element: Element, name: string, data?: any): any;
+  export class Events {
+    fireEvent(element: Element, name: string, data?: any): any;
+    fireEJEvent(element: Element, name: string, data?: any): any;
+  }
   export class DatePicker {
-    defaults: any;
-    constructor(element: any, widgetBase: any);
+    ejDefaults: any;
+    constructor(element: any);
     bind(): any;
     attached(): any;
     propertyChanged(property: any, newValue: any, oldValue: any): any;
