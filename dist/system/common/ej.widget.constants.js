@@ -1,18 +1,18 @@
 System.register([], function (_export) {
   'use strict';
 
-  var constants;
+  var ejConstants;
   return {
     setters: [],
     execute: function () {
-      constants = {
-        eventPrefix: 'ej-on-',
-        bindablePrefix: 'ej-',
+      ejConstants = {
+        eventPrefix: 'e-on-',
+        bindablePrefix: 'e-',
         attributePrefix: 'ej-',
         elementPrefix: 'ej-'
       };
 
-      _export('constants', constants);
+      _export('ejConstants', ejConstants);
     }
   };
 });

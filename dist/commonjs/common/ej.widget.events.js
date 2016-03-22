@@ -6,29 +6,30 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var _ejWidgetConstants = require('./ej.widget.constants');
 
-var Events = (function () {
-	function Events() {
-		_classCallCheck(this, Events);
-	}
+var EJEvent = (function () {
+  function EJEvent() {
+    _classCallCheck(this, EJEvent);
+  }
 
-	Events.prototype.fireEvent = function fireEvent(element, name) {
-		var data = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+  EJEvent.prototype.fireEvent = function fireEvent(element, name) {
+    var data = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
 
-		var event = new CustomEvent(name, {
-			detail: data,
-			bubbles: true
-		});
-		element.dispatchEvent(event);
-		return event;
-	};
+    var event = new CustomEvent(name, {
+      detail: data,
+      bubbles: true
+    });
+    element.dispatchEvent(event);
 
-	Events.prototype.fireEJEvent = function fireEJEvent(element, name) {
-		var data = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+    return event;
+  };
 
-		return fireEvent(element, '' + _ejWidgetConstants.constants.eventPrefix + name, data);
-	};
+  EJEvent.prototype.fireEJEvent = function fireEJEvent(element, name) {
+    var data = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
 
-	return Events;
+    return this.fireEvent(element, '' + _ejWidgetConstants.ejConstants.eventPrefix + name, data);
+  };
+
+  return EJEvent;
 })();
 
-exports.Events = Events;
+exports.EJEvent = EJEvent;

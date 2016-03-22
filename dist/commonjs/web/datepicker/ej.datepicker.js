@@ -12,45 +12,59 @@ var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
 var _aureliaTemplating = require('aurelia-templating');
 
-var _commonEjWidgetCore = require('../../common/ej.widget.core');
+var _commonEjWidgetCore = require('../common/ej.widget.core');
 
-var _commonEjWidgetConstants = require('../../common/ej.widget.constants');
+var _commonEjWidgetDecorators = require('../common/ej.widget.decorators');
 
-require('ej.datepicker.min');
+var _commonEjWidgetConstants = require('../common/ej.widget.constants');
+
+require('web/ej.datepicker.min');
 
 var DatePicker = (function () {
-   var _instanceInitializers = {};
+  var _instanceInitializers = {};
 
-   _createDecoratedClass(DatePicker, [{
-      key: 'ejDefaults',
-      decorators: [_aureliaTemplating.bindable],
-      initializer: function initializer() {
-         return {};
-      },
-      enumerable: true
-   }], null, _instanceInitializers);
+  _createDecoratedClass(DatePicker, [{
+    key: 'defaults',
+    decorators: [_aureliaTemplating.bindable],
+    initializer: function initializer() {
+      return {};
+    },
+    enumerable: true
+  }], null, _instanceInitializers);
 
-   function DatePicker(element) {
-      _classCallCheck(this, _DatePicker);
+  function DatePicker(element, ejWidget) {
+    _classCallCheck(this, _DatePicker);
 
-      _defineDecoratedPropertyDescriptor(this, 'ejDefaults', _instanceInitializers);
+    _defineDecoratedPropertyDescriptor(this, 'defaults', _instanceInitializers);
 
-      this.element = element;
-   }
+    this.element = element;
+    this.ejWidget = ejWidget.initiateWidget('ejDatePicker').linkViewModel(this).useValueBinding();
+  }
 
-   DatePicker.prototype.bind = function bind() {};
+  DatePicker.prototype.bind = function bind(ctx) {
+    this.$parent = ctx;
+  };
 
-   DatePicker.prototype.attached = function attached() {};
+  DatePicker.prototype.attached = function attached() {
+    this.widget = this.ejWidget.renderWidget({
+      element: this.element,
+      parentCtx: this.$parent
+    });
+  };
 
-   DatePicker.prototype.propertyChanged = function propertyChanged(property, newValue, oldValue) {};
+  DatePicker.prototype.propertyChanged = function propertyChanged(property, newValue, oldValue) {
+    this.ejWidget.handlePropertyChanged(this.widget, property, newValue, oldValue);
+  };
 
-   DatePicker.prototype.detached = function detached() {};
+  DatePicker.prototype.detached = function detached() {
+    this.ejWidget.destroy(this.widget);
+  };
 
-   var _DatePicker = DatePicker;
-   DatePicker = _aureliaDependencyInjection.inject(Element)(DatePicker) || DatePicker;
-   DatePicker = _commonEjWidgetCore.generateBindables('ejDatePicker')(DatePicker) || DatePicker;
-   DatePicker = _aureliaTemplating.customAttribute(_commonEjWidgetConstants.constants.attributePrefix + 'datepicker')(DatePicker) || DatePicker;
-   return DatePicker;
+  var _DatePicker = DatePicker;
+  DatePicker = _aureliaDependencyInjection.inject(Element, _commonEjWidgetCore.EJWidget)(DatePicker) || DatePicker;
+  DatePicker = _commonEjWidgetDecorators.generateEJBindables('ejDatePicker')(DatePicker) || DatePicker;
+  DatePicker = _aureliaTemplating.customAttribute(_commonEjWidgetConstants.ejConstants.attributePrefix + 'datepicker')(DatePicker) || DatePicker;
+  return DatePicker;
 })();
 
 exports.DatePicker = DatePicker;

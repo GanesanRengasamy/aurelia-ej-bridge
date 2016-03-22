@@ -1,35 +1,41 @@
 import {inject} from 'aurelia-dependency-injection';
 import {customAttribute, bindable} from 'aurelia-templating';
-import {generateBindables, WidgetBase} from '../../common/ej.widget.core';
-import {constants} from '../../common/ej.widget.constants';
-import 'ej.datepicker.min';
+import {EJWidget} from '../common/ej.widget.core';
+import {generateEJBindables} from '../common/ej.widget.decorators';
+import {ejConstants} from '../common/ej.widget.constants';
+import 'web/ej.datepicker.min';
 
-@customAttribute(`${constants.attributePrefix}datepicker`)
-@generateBindables('ejDatePicker')
-@inject(Element)
+@customAttribute(`${ejConstants.attributePrefix}datepicker`)
+@generateEJBindables('ejDatePicker')
+@inject(Element, EJWidget)
 export class DatePicker {
 
-  @bindable ejDefaults = {};
+  @bindable defaults = {};
 
-  constructor(element) {
-     this.element = element;
+  constructor(element, ejWidget) {
+    this.element = element;
+    this.ejWidget = ejWidget
+                        .initiateWidget('ejDatePicker')
+                        .linkViewModel(this)
+                        .useValueBinding();
   }
 
-  bind() {
-     
+  bind(ctx) {
+    this.$parent = ctx;
   }
 
   attached() {
-     
+    this.widget = this.ejWidget.renderWidget({
+      element: this.element,
+      parentCtx: this.$parent
+    });
   }
 
-   
-
   propertyChanged(property, newValue, oldValue) {
-     
+    this.ejWidget.handlePropertyChanged(this.widget, property, newValue, oldValue);
   }
 
   detached() {
-     
+    this.ejWidget.destroy(this.widget);
   }
 }
