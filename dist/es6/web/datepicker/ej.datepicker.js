@@ -3,7 +3,7 @@ import {customAttribute, bindable} from 'aurelia-templating';
 import {EJWidget} from '../common/ej.widget.core';
 import {generateEJBindables} from '../common/ej.widget.decorators';
 import {ejConstants} from '../common/ej.widget.constants';
-import 'web/ej.datepicker.min';
+import 'ej.datepicker.min';
 
 @customAttribute(`${ejConstants.attributePrefix}datepicker`)
 @generateEJBindables('ejDatePicker')

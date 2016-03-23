@@ -2,7 +2,7 @@ import {BindableProperty, HtmlBehaviorResource} from 'aurelia-templating';
 import {Container} from 'aurelia-dependency-injection';
 import {metadata} from 'aurelia-metadata';
 import {bindingMode} from 'aurelia-binding';
-import {Utility} from './ej.widget.utility';
+import {Utils} from './ej.widget.utils';
 
 export function generateEJBindables(pluginName: string, extraProperties = []) {
   return function(target, key, descriptor) {
@@ -10,15 +10,15 @@ export function generateEJBindables(pluginName: string, extraProperties = []) {
     // on which we're going to create the BindableProperty's
     let behaviorResource = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, target);
     let container = (Container.instance || new Container());
-    let utility = container.get(Utility);
-    let optionKeys = utility.getProperties(pluginName, extraProperties);
+    let utils = container.get(Utils);
+    let optionKeys = utils.getProperties(pluginName, extraProperties);
 
     optionKeys.push('widget');
 
     for (let i = 0; i < optionKeys.length; i++) {
 		
       let nameOrConfigOrTarget = {
-        name: utility.getBindablePropertyName(optionKeys[i])
+        name: utils.getBindablePropertyName(optionKeys[i])
       };
 
       if (optionKeys[i] === 'widget') {

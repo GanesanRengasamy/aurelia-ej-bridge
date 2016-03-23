@@ -1,7 +1,7 @@
-System.register(['aurelia-templating', 'aurelia-dependency-injection', 'aurelia-metadata', 'aurelia-binding', './ej.widget.utility'], function (_export) {
+System.register(['aurelia-templating', 'aurelia-dependency-injection', 'aurelia-metadata', 'aurelia-binding', './ej.widget.utils'], function (_export) {
   'use strict';
 
-  var BindableProperty, HtmlBehaviorResource, Container, metadata, bindingMode, Utility;
+  var BindableProperty, HtmlBehaviorResource, Container, metadata, bindingMode, Utils;
 
   _export('generateEJBindables', generateEJBindables);
 
@@ -11,15 +11,15 @@ System.register(['aurelia-templating', 'aurelia-dependency-injection', 'aurelia-
     return function (target, key, descriptor) {
       var behaviorResource = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, target);
       var container = Container.instance || new Container();
-      var utility = container.get(Utility);
-      var optionKeys = utility.getProperties(pluginName, extraProperties);
+      var utils = container.get(Utils);
+      var optionKeys = utils.getProperties(pluginName, extraProperties);
 
       optionKeys.push('widget');
 
       for (var i = 0; i < optionKeys.length; i++) {
 
         var nameOrConfigOrTarget = {
-          name: utility.getBindablePropertyName(optionKeys[i])
+          name: utils.getBindablePropertyName(optionKeys[i])
         };
 
         if (optionKeys[i] === 'widget') {
@@ -42,8 +42,8 @@ System.register(['aurelia-templating', 'aurelia-dependency-injection', 'aurelia-
       metadata = _aureliaMetadata.metadata;
     }, function (_aureliaBinding) {
       bindingMode = _aureliaBinding.bindingMode;
-    }, function (_ejWidgetUtility) {
-      Utility = _ejWidgetUtility.Utility;
+    }, function (_ejWidgetUtils) {
+      Utils = _ejWidgetUtils.Utils;
     }],
     execute: function () {}
   };

@@ -6,7 +6,7 @@ declare module 'aurelia-ej-bridge' {
   import { BindableProperty, HtmlBehaviorResource, customAttribute, bindable }  from 'aurelia-templating';
   import { metadata }  from 'aurelia-metadata';
   import { bindingMode }  from 'aurelia-binding';
-  import 'web/ej.datepicker.min';
+  import 'ej.datepicker.min';
   
   /**
   * Aurelia-EJ-Bridge configuration builder
@@ -38,7 +38,7 @@ declare module 'aurelia-ej-bridge' {
     $parent: any;
     viewModel: any;
     protoObj: any;
-    constructor(taskQueue: any, utility: any, ejevents: any);
+    constructor(taskQueue: any, utils: any, ejevents: any);
     initiateWidget(pluginName: any): any;
     linkViewModel(viewModel: any): any;
     useViewResources(resources: any): any;
@@ -71,7 +71,7 @@ declare module 'aurelia-ej-bridge' {
       */
     fireEJEvent(element: Element, name: string, data?: any): any;
   }
-  export class Utility {
+  export class Utils {
     cache: any;
     getProperties(pluginName: string, extraProperties?: any): string[];
     getGeneratedDefaults(pluginName: string): any;

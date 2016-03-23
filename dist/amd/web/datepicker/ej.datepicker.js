@@ -1,4 +1,4 @@
-define(['exports', 'aurelia-dependency-injection', 'aurelia-templating', '../common/ej.widget.core', '../common/ej.widget.decorators', '../common/ej.widget.constants', 'web/ej.datepicker.min'], function (exports, _aureliaDependencyInjection, _aureliaTemplating, _commonEjWidgetCore, _commonEjWidgetDecorators, _commonEjWidgetConstants, _webEjDatepickerMin) {
+define(['exports', 'aurelia-dependency-injection', 'aurelia-templating', '../common/ej.widget.core', '../common/ej.widget.decorators', '../common/ej.widget.constants', 'ej.datepicker.min'], function (exports, _aureliaDependencyInjection, _aureliaTemplating, _commonEjWidgetCore, _commonEjWidgetDecorators, _commonEjWidgetConstants, _ejDatepickerMin) {
   'use strict';
 
   exports.__esModule = true;

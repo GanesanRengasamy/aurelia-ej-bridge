@@ -1,4 +1,4 @@
-System.register(['aurelia-dependency-injection', 'aurelia-templating', '../common/ej.widget.core', '../common/ej.widget.decorators', '../common/ej.widget.constants', 'web/ej.datepicker.min'], function (_export) {
+System.register(['aurelia-dependency-injection', 'aurelia-templating', '../common/ej.widget.core', '../common/ej.widget.decorators', '../common/ej.widget.constants', 'ej.datepicker.min'], function (_export) {
   'use strict';
 
   var inject, customAttribute, bindable, EJWidget, generateEJBindables, ejConstants, DatePicker;
@@ -21,7 +21,7 @@ System.register(['aurelia-dependency-injection', 'aurelia-templating', '../commo
       generateEJBindables = _commonEjWidgetDecorators.generateEJBindables;
     }, function (_commonEjWidgetConstants) {
       ejConstants = _commonEjWidgetConstants.ejConstants;
-    }, function (_webEjDatepickerMin) {}],
+    }, function (_ejDatepickerMin) {}],
     execute: function () {
       DatePicker = (function () {
         var _instanceInitializers = {};

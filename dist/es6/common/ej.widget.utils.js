@@ -3,7 +3,7 @@ import {inject} from 'aurelia-dependency-injection';
 import {ejConstants} from './ej.widget.constants';
 const capitalMatcher = /([A-Z])/g;
 
-export class Utility {
+export class Utils {
 
   cache = {};
 

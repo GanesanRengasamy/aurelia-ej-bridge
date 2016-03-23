@@ -18,7 +18,7 @@ var _commonEjWidgetDecorators = require('../common/ej.widget.decorators');
 
 var _commonEjWidgetConstants = require('../common/ej.widget.constants');
 
-require('web/ej.datepicker.min');
+require('ej.datepicker.min');
 
 var DatePicker = (function () {
   var _instanceInitializers = {};

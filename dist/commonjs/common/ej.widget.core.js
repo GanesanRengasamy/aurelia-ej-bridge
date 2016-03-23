@@ -4,7 +4,7 @@ exports.__esModule = true;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var _ejWidgetUtility = require('./ej.widget.utility');
+var _ejWidgetUtils = require('./ej.widget.utils');
 
 var _ejWidgetEvents = require('./ej.widget.events');
 
@@ -13,11 +13,11 @@ var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 var _aureliaTaskQueue = require('aurelia-task-queue');
 
 var EJWidget = (function () {
-  function EJWidget(taskQueue, utility, ejevents) {
+  function EJWidget(taskQueue, utils, ejevents) {
     _classCallCheck(this, _EJWidget);
 
     this.taskQueue = taskQueue;
-    this.utility = utility;
+    this.utils = utils;
     this.ejevent = ejevents;
   }
 
@@ -111,9 +111,9 @@ var EJWidget = (function () {
   };
 
   EJWidget.prototype._getOptions = function _getOptions(element) {
-    var options = this.utility.getOptions(this.viewModel, this.pluginName);
+    var options = this.utils.getOptions(this.viewModel, this.pluginName);
     var eventOptions = this.getEventOptions(element);
-    return this.utility.pruneOptions(Object.assign({}, this.viewModel.defaults, options, eventOptions));
+    return this.utils.pruneOptions(Object.assign({}, this.viewModel.defaults, options, eventOptions));
   };
 
   EJWidget.prototype.getEventOptions = function getEventOptions(element) {
@@ -122,7 +122,7 @@ var EJWidget = (function () {
     var options = {};
     var delayedExecution = ['change'];
 
-    var events = this.utility.getEJEvents(element);
+    var events = this.utils.getEJEvents(element);
 
     events.forEach(function (event) {
       if (!_this2.protoObj.proto.defaults.includes(event)) {
@@ -132,12 +132,12 @@ var EJWidget = (function () {
       if (delayedExecution.includes(event)) {
         options[event] = function (e) {
           _this2.taskQueue.queueMicroTask(function () {
-            return _this2.ejevent.fireEJEvent(element, _this2.utility._hyphenate(event), e);
+            return _this2.ejevent.fireEJEvent(element, _this2.utils._hyphenate(event), e);
           });
         };
       } else {
         options[event] = function (e) {
-          return _this2.ejevent.fireEJEvent(element, _this2.utility._hyphenate(event), e);
+          return _this2.ejevent.fireEJEvent(element, _this2.utils._hyphenate(event), e);
         };
       }
     });
@@ -146,11 +146,11 @@ var EJWidget = (function () {
   };
 
   EJWidget.prototype._handleChange = function _handleChange(widget) {
-    this.viewModel[this.utility.getBindablePropertyName(this.valueBindingProperty)] = widget[this.valueFunction]();
+    this.viewModel[this.utils.getBindablePropertyName(this.valueBindingProperty)] = widget[this.valueFunction]();
   };
 
   EJWidget.prototype.handlePropertyChanged = function handlePropertyChanged(widget, property, newValue, oldValue) {
-    if (property === this.utility.getBindablePropertyName(this.valueBindingProperty) && this.withValueBinding) {
+    if (property === this.utils.getBindablePropertyName(this.valueBindingProperty) && this.withValueBinding) {
       widget[this.valueFunction](newValue);
     }
   };
@@ -162,7 +162,7 @@ var EJWidget = (function () {
   };
 
   var _EJWidget = EJWidget;
-  EJWidget = _aureliaDependencyInjection.inject(_aureliaTaskQueue.TaskQueue, _ejWidgetUtility.Utility)(EJWidget) || EJWidget;
+  EJWidget = _aureliaDependencyInjection.inject(_aureliaTaskQueue.TaskQueue, _ejWidgetUtils.Utils)(EJWidget) || EJWidget;
   EJWidget = _aureliaDependencyInjection.transient()(EJWidget) || EJWidget;
   return EJWidget;
 })();

@@ -54,7 +54,7 @@ export const ejConstants = {
   elementPrefix: 'ej-'
 };
 @transient()
-@inject(TaskQueue, Utility)
+@inject(TaskQueue, Utils)
 export class EJWidget {
 
   element: Element;
@@ -71,9 +71,9 @@ export class EJWidget {
 
   protoObj: any;
 
-  constructor(taskQueue, utility, ejevents) {
+  constructor(taskQueue, utils, ejevents) {
     this.taskQueue = taskQueue;
-    this.utility = utility;
+    this.utils = utils;
 	this.ejevent = ejevents;
   }
 
@@ -161,16 +161,16 @@ export class EJWidget {
   }
 
   _getOptions(element) {
-    let options = this.utility.getOptions(this.viewModel, this.pluginName);
+    let options = this.utils.getOptions(this.viewModel, this.pluginName);
     let eventOptions = this.getEventOptions(element);
-    return this.utility.pruneOptions(Object.assign({}, this.viewModel.defaults, options, eventOptions));
+    return this.utils.pruneOptions(Object.assign({}, this.viewModel.defaults, options, eventOptions));
   }
 
   getEventOptions(element) {
     let options = {};
     let delayedExecution = ['change'];
 
-    let events = this.utility.getEJEvents(element);
+    let events = this.utils.getEJEvents(element);
 
     events.forEach(event => {
       if (!this.protoObj.proto.defaults.includes(event)) {
@@ -179,10 +179,10 @@ export class EJWidget {
 
       if (delayedExecution.includes(event)) {
         options[event] = e => {
-          this.taskQueue.queueMicroTask(() => this.ejevent.fireEJEvent(element, this.utility._hyphenate(event), e));
+          this.taskQueue.queueMicroTask(() => this.ejevent.fireEJEvent(element, this.utils._hyphenate(event), e));
         };
       } else {
-        options[event] = e => this.ejevent.fireEJEvent(element, this.utility._hyphenate(event), e);
+        options[event] = e => this.ejevent.fireEJEvent(element, this.utils._hyphenate(event), e);
       }
     });
 
@@ -191,11 +191,11 @@ export class EJWidget {
 
 
   _handleChange(widget) {
-    this.viewModel[this.utility.getBindablePropertyName(this.valueBindingProperty)] = widget[this.valueFunction]();
+    this.viewModel[this.utils.getBindablePropertyName(this.valueBindingProperty)] = widget[this.valueFunction]();
   }
 
   handlePropertyChanged(widget, property, newValue, oldValue) {
-    if (property === this.utility.getBindablePropertyName(this.valueBindingProperty) && this.withValueBinding) {
+    if (property === this.utils.getBindablePropertyName(this.valueBindingProperty) && this.withValueBinding) {
       widget[this.valueFunction](newValue);
     }
   }
@@ -213,15 +213,15 @@ export function generateEJBindables(pluginName: string, extraProperties = []) {
     // on which we're going to create the BindableProperty's
     let behaviorResource = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, target);
     let container = (Container.instance || new Container());
-    let utility = container.get(Utility);
-    let optionKeys = utility.getProperties(pluginName, extraProperties);
+    let utils = container.get(Utils);
+    let optionKeys = utils.getProperties(pluginName, extraProperties);
 
     optionKeys.push('widget');
 
     for (let i = 0; i < optionKeys.length; i++) {
 		
       let nameOrConfigOrTarget = {
-        name: utility.getBindablePropertyName(optionKeys[i])
+        name: utils.getBindablePropertyName(optionKeys[i])
       };
 
       if (optionKeys[i] === 'widget') {
@@ -266,7 +266,7 @@ export class EJEvent {
 }
 const capitalMatcher = /([A-Z])/g;
 
-export class Utility {
+export class Utils {
 
   cache = {};
 
@@ -364,7 +364,7 @@ export class Utility {
   }
 }
 
-import 'web/ej.datepicker.min';
+import 'ej.datepicker.min';
 
 @customAttribute(`${ejConstants.attributePrefix}datepicker`)
 @generateEJBindables('ejDatePicker')

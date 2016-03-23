@@ -12,14 +12,14 @@ var _ejWidgetConstants = require('./ej.widget.constants');
 
 var capitalMatcher = /([A-Z])/g;
 
-var Utility = (function () {
-  function Utility() {
-    _classCallCheck(this, Utility);
+var Utils = (function () {
+  function Utils() {
+    _classCallCheck(this, Utils);
 
     this.cache = {};
   }
 
-  Utility.prototype.getProperties = function getProperties(pluginName) {
+  Utils.prototype.getProperties = function getProperties(pluginName) {
     var extraProperties = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
 
     if (this.cache[pluginName]) {
@@ -37,21 +37,21 @@ var Utility = (function () {
     return keys;
   };
 
-  Utility.prototype.getGeneratedDefaults = function getGeneratedDefaults(pluginName) {
+  Utils.prototype.getGeneratedDefaults = function getGeneratedDefaults(pluginName) {
     if (!_ejWidgetBindables.ejBindables[pluginName]) {
       throw new Error(pluginName + ' not found in generated ej.widget.bindables.js');
     }
     return _ejWidgetBindables.ejBindables[pluginName];
   };
 
-  Utility.prototype.getWidgetDefaults = function getWidgetDefaults(pluginName) {
+  Utils.prototype.getWidgetDefaults = function getWidgetDefaults(pluginName) {
     if (ej.widget.registeredWidgets[pluginName]) {
       return Object.keys(ej.widget.registeredWidgets[pluginName].proto.defaults);
     }
     return [];
   };
 
-  Utility.prototype.getOptions = function getOptions(viewModel, className) {
+  Utils.prototype.getOptions = function getOptions(viewModel, className) {
     var options = {};
     var props = this.getProperties(className);
 
@@ -67,11 +67,11 @@ var Utility = (function () {
     return this.pruneOptions(options);
   };
 
-  Utility.prototype.hasValue = function hasValue(prop) {
+  Utils.prototype.hasValue = function hasValue(prop) {
     return typeof prop !== 'undefined' && prop !== null;
   };
 
-  Utility.prototype.pruneOptions = function pruneOptions(options) {
+  Utils.prototype.pruneOptions = function pruneOptions(options) {
     var returnOptions = {};
 
     for (var prop in options) {
@@ -83,31 +83,31 @@ var Utility = (function () {
     return returnOptions;
   };
 
-  Utility.prototype.addHyphenAndLower = function addHyphenAndLower(char) {
+  Utils.prototype.addHyphenAndLower = function addHyphenAndLower(char) {
     return '-' + char.toLowerCase();
   };
 
-  Utility.prototype._hyphenate = function _hyphenate(name) {
+  Utils.prototype._hyphenate = function _hyphenate(name) {
     return (name.charAt(0).toLowerCase() + name.slice(1)).replace(capitalMatcher, this.addHyphenAndLower);
   };
 
-  Utility.prototype._unhyphenate = function _unhyphenate(name) {
+  Utils.prototype._unhyphenate = function _unhyphenate(name) {
     return name.replace(/-([a-z])/g, function (g) {
       return g[1].toUpperCase();
     });
   };
 
-  Utility.prototype.getBindablePropertyName = function getBindablePropertyName(propertyName) {
+  Utils.prototype.getBindablePropertyName = function getBindablePropertyName(propertyName) {
     return this._unhyphenate('' + _ejWidgetConstants.ejConstants.bindablePrefix + propertyName);
   };
 
-  Utility.prototype.getEJPropertyName = function getEJPropertyName(propertyName) {
+  Utils.prototype.getEJPropertyName = function getEJPropertyName(propertyName) {
     var withoutPrefix = propertyName.substring(1);
 
     return withoutPrefix.charAt(0).toLowerCase() + withoutPrefix.slice(1);
   };
 
-  Utility.prototype.getEJEvents = function getEJEvents(element) {
+  Utils.prototype.getEJEvents = function getEJEvents(element) {
     var attributes = Array.prototype.slice.call(element.attributes);
     var events = [];
 
@@ -120,7 +120,7 @@ var Utility = (function () {
     return events;
   };
 
-  return Utility;
+  return Utils;
 })();
 
-exports.Utility = Utility;
+exports.Utils = Utils;
