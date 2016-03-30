@@ -33,6 +33,13 @@ export class Utils {
     return [];
   }
   
+  getObservableProperties(pluginName: string): string[] {
+    if (ej.widget.registeredWidgets[pluginName]) {
+      return ej.widget.registeredWidgets[pluginName].proto.observables;
+    }
+    return [];
+  }
+  
   getOptions(viewModel, className) {
     let options = {};
     let props = this.getProperties(className);
@@ -79,12 +86,6 @@ export class Utils {
 
   getBindablePropertyName(propertyName: string): string {
     return this._unhyphenate(`${ejConstants.bindablePrefix}${propertyName}`);
-  }
-
-  getEJPropertyName(propertyName: string): string {
-    let withoutPrefix = propertyName.substring(1);
-
-    return (withoutPrefix.charAt(0).toLowerCase() + withoutPrefix.slice(1));
   }
 
   getEJEvents(element: Element): string[] {

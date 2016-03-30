@@ -4,27 +4,23 @@ import {inject, transient} from 'aurelia-dependency-injection';
 import {TaskQueue} from 'aurelia-task-queue';
 
 @transient()
-@inject(TaskQueue, Utils)
+@inject(TaskQueue, Utils, EJEvent)
 export class EJWidget {
 
   element: Element;
 
   taskQueue: TaskQueue;
 
-  target: Element;
-
   pluginName: string;
-
-  $parent: any;
 
   viewModel: any;
 
   protoObj: any;
 
-  constructor(taskQueue, utils, ejevents) {
+  constructor(taskQueue, utils, ejevent) {
     this.taskQueue = taskQueue;
     this.utils = utils;
-	this.ejevent = ejevents;
+	this.ejevent = ejevent;
   }
 
   initiateWidget(pluginName) {
@@ -33,9 +29,7 @@ export class EJWidget {
     }
 
     this.pluginName = pluginName;
-
     this.protoObj = ej.widget.registeredWidgets[this.pluginName];
-
     return this;
   }
 
@@ -83,31 +77,17 @@ export class EJWidget {
     }
 
     Object.assign(allOptions, {
-      _$parent: [options.parentCtx],
       _$resources: [this.viewResources]
     });
 
-    let widget = this._renderWidget(options.element, allOptions, this.pluginName);
-
-    widget._$parent = options.parentCtx;
+    let widget = jQuery(options.element)[this.pluginName](allOptions).data(this.pluginName);	
     widget._$resources = this.viewResources;
-
-    if (this.withValueBinding) {
-      widget.first('change', (args) => this._handleChange(args.sender));
-
-      this._handleChange(widget);
-    }
 
     if (options.afterInitialize) {
       options.afterInitialize();
     }
 
     return widget;
-  }
-
-
-  _renderWidget(element, options, pluginName) {
-    return jQuery(element)[pluginName](options).data(pluginName);
   }
 
   _getOptions(element) {
@@ -121,13 +101,13 @@ export class EJWidget {
     let delayedExecution = ['change'];
 
     let events = this.utils.getEJEvents(element);
-
+	
     events.forEach(event => {
-      if (!this.protoObj.proto.defaults.includes(event)) {
+      if (typeof(this.protoObj.proto.defaults[event]) === 'undefined') {
         throw new Error(`${event} is not an event on the ${this.pluginName} control`);
       }
 
-      if (delayedExecution.includes(event)) {
+      if (delayedExecution.indexOf(event) != -1 ) {
         options[event] = e => {
           this.taskQueue.queueMicroTask(() => this.ejevent.fireEJEvent(element, this.utils._hyphenate(event), e));
         };
@@ -137,18 +117,7 @@ export class EJWidget {
     });
 
     return options;
-  }
-
-
-  _handleChange(widget) {
-    this.viewModel[this.utils.getBindablePropertyName(this.valueBindingProperty)] = widget[this.valueFunction]();
-  }
-
-  handlePropertyChanged(widget, property, newValue, oldValue) {
-    if (property === this.utils.getBindablePropertyName(this.valueBindingProperty) && this.withValueBinding) {
-      widget[this.valueFunction](newValue);
-    }
-  }
+  }  
 
   destroy(widget) {
     if (widget && widget.element) {

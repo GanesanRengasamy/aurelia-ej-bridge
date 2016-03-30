@@ -1,6 +1,5 @@
 import {Aurelia} from 'aurelia-framework';
 import {EJConfigBuilder} from './config-builder';
-import 'jquery';
 
 export function configure(aurelia: Aurelia, configCallback?: (builder: EJConfigBuilder) => void) {
   let builder = new EJConfigBuilder();

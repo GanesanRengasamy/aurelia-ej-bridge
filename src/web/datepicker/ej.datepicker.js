@@ -3,7 +3,6 @@ import {customAttribute, bindable} from 'aurelia-templating';
 import {EJWidget} from '../common/ej.widget.core';
 import {generateEJBindables} from '../common/ej.widget.decorators';
 import {ejConstants} from '../common/ej.widget.constants';
-import 'ej.datepicker.min';
 
 @customAttribute(`${ejConstants.attributePrefix}datepicker`)
 @generateEJBindables('ejDatePicker')
@@ -14,25 +13,15 @@ export class DatePicker {
 
   constructor(element, ejWidget) {
     this.element = element;
-    this.ejWidget = ejWidget
-                        .initiateWidget('ejDatePicker')
-                        .linkViewModel(this)
-                        .useValueBinding();
-  }
-
-  bind(ctx) {
-    this.$parent = ctx;
+    this.ejWidget = ejWidget.initiateWidget('ejDatePicker').linkViewModel(this);
   }
 
   attached() {
-    this.widget = this.ejWidget.renderWidget({
-      element: this.element,
-      parentCtx: this.$parent
-    });
+    this.widget = this.ejWidget.renderWidget({ element: this.element });
   }
-
+  
   propertyChanged(property, newValue, oldValue) {
-    this.ejWidget.handlePropertyChanged(this.widget, property, newValue, oldValue);
+	  
   }
 
   detached() {

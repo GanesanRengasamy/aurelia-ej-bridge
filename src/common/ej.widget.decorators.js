@@ -12,19 +12,17 @@ export function generateEJBindables(pluginName: string, extraProperties = []) {
     let container = (Container.instance || new Container());
     let utils = container.get(Utils);
     let optionKeys = utils.getProperties(pluginName, extraProperties);
-
-    optionKeys.push('widget');
-
+	let obsevablesKeys = utils.getObservableProperties(pluginName);
     for (let i = 0; i < optionKeys.length; i++) {
 		
       let nameOrConfigOrTarget = {
         name: utils.getBindablePropertyName(optionKeys[i])
       };
-
-      if (optionKeys[i] === 'widget') {
+	  
+	  if (obsevablesKeys.indexOf(optionKeys[i]) != -1 ) { 
         nameOrConfigOrTarget.defaultBindingMode = bindingMode.twoWay;
       }
-
+	  
       let bindableProperty = new BindableProperty(nameOrConfigOrTarget);
       bindableProperty.registerWith(target, behaviorResource, descriptor);
     }
